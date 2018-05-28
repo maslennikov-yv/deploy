@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  my:
+  mysql:
     image: mysql
     volumes:
       - ./mysql/data:/var/lib/mysql
@@ -10,7 +10,7 @@ services:
       MYSQL_DATABASE: homestead
       MYSQL_USER: homestead
       MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: truelove
+      MYSQL_ROOT_PASSWORD: bigsecret
   php:
     build: ./php/
     volumes:
@@ -24,16 +24,14 @@ services:
     networks:
       default:
         aliases:
-          - rusvpn.local
-          - pushex.local
+          - site.local
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
       - ./nginx/log:/var/log/nginx
     volumes_from:
       - php
     links:
-      - php:php-rusvpn
-      - php:php-pushex
+      - php:php-site
     ports:
       - 80:80
       - 443:443
